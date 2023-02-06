@@ -4,11 +4,26 @@
   <head>
 	<title>A sexy spark line</title>
 	<style>
-	  #graph1 {
+	  spark-line {
+		  font-size: 24pt;
+	  }
+	  spark-line::part(even) {
 		  fill: royalblue;
 	  }
-	  #graph2 {
+	  spark-line::part(odd) {
 		  fill: darkslateblue;
+	  }
+	  spark-line::part(last) {
+		  fill: crimson;
+	  }
+	  spark-line::part(first) {
+		  fill: olive;
+	  }
+	  body {
+		  margin-top: 0;
+		  min-height: 100vh;
+		  background-image: linear-gradient(125deg, olivedrab, slategray);
+		  flex-grow: 2;
 	  }
 	</style>
 	
@@ -22,13 +37,12 @@
 				   points="0.3 0.2
 						   0.1 0.3
 						   0.6 0.9"></spark-line>
-	  This is a paragraph describing the graph
-	  I really wish I knew what to blog about, blogging seems
-	  like a good way to market yourself.
+	  The figures don't lie. Things are clearly on the <strong>UP</strong>
+	  😎
 	</p>
 	<p><spark-line id="graph2"
-				   points="0.9 0.5 0.9 0.2"></spark-line>
-	  This is another paragraph about a different graph.
+				   points="0.9 0.5 0.9 0.7 0.6 0.3"></spark-line>
+	  Maybe things aren't looking so good😢.
 	</p>
   </body>
 

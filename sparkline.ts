@@ -58,10 +58,21 @@ class SparkLine extends HTMLElement {
 	private populateGraph(): void {
 		const group = document.createElementNS("http://www.w3.org/2000/svg",
 											   "g");
+		// const rectangles: Array<SVGRectElement> = [];
 		for (let i = 0; i < this.data.length; ++i) {
 			const rect = this.createRect(i, this.data[i])
-			rect.setAttributeNS(null, "part", "entry");
+			const parts: Array<string> = [];
+			if (i === 0)
+				parts.push("first");
+			if (i === (this.data.length - 1))
+				parts.push("last");
+			if ((i%2) === 0)
+				parts.push("even");
+			else
+				parts.push("odd");
+			rect.setAttributeNS(null, "part", parts.join(" "));
 			group.append(rect);
+			// rectangles.push(rect);
 		}
 		this.svg.append(group);
 	}
