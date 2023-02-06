@@ -2,9 +2,25 @@ class SparkLine extends HTMLElement {
     svg;
     data;
     dataRects;
+    static get observedAttributes() {
+        return ["points"];
+    }
+    get points() {
+        if (!this.hasAttribute("points"))
+            return [];
+        const points = [];
+        const regMatches = this.getAttribute("points").
+            matchAll(/[0-9]+[,.]{1}[0-9]+/g);
+        if (regMatches)
+            for (const match of regMatches)
+                points.push(Number(match[0]));
+        return points;
+    }
     setData(data) {
         this.clearGraph();
         this.data = data;
+        if (data.length === 0)
+            return;
         this.adjustViewBox();
         this.populateGraph();
     }
@@ -18,19 +34,25 @@ class SparkLine extends HTMLElement {
         this.shadowRoot.append(this.svg);
     }
     connectedCallback() {
-        console.log("connected!");
-        let d = [];
-        for (let i = 0; i < 8; i++)
-            d.push(Math.random());
-        this.setData(d);
+        this.setData(this.points);
+    }
+    attributeChangedCallback(attr, current, previous) {
+        switch (attr) {
+            case ("points"):
+                this.setData(this.points);
+                break;
+        }
     }
     adjustViewBox() {
         this.svg.setAttributeNS(null, "viewBox", `0 0 ${this.data.length} 1`);
     }
     populateGraph() {
         const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        for (let i = 0; i < this.data.length; ++i)
-            group.append(this.createRect(i, this.data[i]));
+        for (let i = 0; i < this.data.length; ++i) {
+            const rect = this.createRect(i, this.data[i]);
+            rect.setAttributeNS(null, "part", "entry");
+            group.append(rect);
+        }
         this.svg.append(group);
     }
     createRect(index, height) {

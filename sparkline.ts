@@ -3,9 +3,27 @@ class SparkLine extends HTMLElement {
 	data;
 	dataRects;
 
+	static get observedAttributes(): Array<string> {
+		return ["points"];
+	}
+
+	get points(): Array<number> {
+		if (!this.hasAttribute("points"))
+			return [];
+		const points: Array<number> = [];
+		const regMatches = this.getAttribute("points").
+			matchAll(/[0-9]+[,.]{1}[0-9]+/g);
+		if (regMatches)
+			for (const match of regMatches)
+				points.push(Number(match[0]));
+		return points;
+	}
+	
 	setData(data: Array<number>): void {
 		this.clearGraph();
 		this.data = data;
+		if (data.length === 0)
+			return;
 		this.adjustViewBox();
 		this.populateGraph();
 	}
@@ -21,12 +39,18 @@ class SparkLine extends HTMLElement {
 		this.shadowRoot.append(this.svg);
 	}
 	private connectedCallback(): void {
-		console.log("connected!");
-		let d = [];
-		for (let i = 0; i < 8; i++)
-			d.push(Math.random());
-		this.setData(d);
+		this.setData(this.points);
 	}
+	private attributeChangedCallback(attr: string,
+									 current: string,
+									 previous: string): void {
+		switch (attr) {
+			case ("points"):
+				this.setData(this.points);
+				break;
+		}
+	}
+	
 	private adjustViewBox(): void {
 		this.svg.setAttributeNS(null, "viewBox",
 								`0 0 ${this.data.length} 1`);
@@ -55,5 +79,4 @@ class SparkLine extends HTMLElement {
 			rect.remove();
 	}
 }
-
 customElements.define("spark-line", SparkLine);
