@@ -1,4 +1,4 @@
-class SparkLine extends HTMLElement {
+class Sparkline extends HTMLElement {
 	svg;
 	data;
 	dataRects;
@@ -90,4 +90,4 @@ class SparkLine extends HTMLElement {
 			rect.remove();
 	}
 }
-customElements.define("spark-line", SparkLine);
+customElements.define("spark-", Sparkline);
