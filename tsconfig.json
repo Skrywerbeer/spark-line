@@ -9,6 +9,6 @@
 		"target" : "es2022",
 	},
 	"files": [
-		"spark.ts",
+		"sparkline.ts",
 	]
 }
