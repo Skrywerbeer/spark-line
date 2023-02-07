@@ -23,6 +23,7 @@ delimited by any non-numeric character.
 Styling is done using 
 ```css
 spark- {}
+spark::part(element) {}
 spark-::part(even) {}
 spark-::part(odd) {}
 spark-::part(first) {}
