@@ -50,7 +50,7 @@ class Sparkline extends HTMLElement {
         const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
         for (let i = 0; i < this.data.length; ++i) {
             const rect = this.createRect(i, this.data[i]);
-            const parts = [];
+            const parts = ["element"];
             if (i === 0)
                 parts.push("first");
             if (i === (this.data.length - 1))

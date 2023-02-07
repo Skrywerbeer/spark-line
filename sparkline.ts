@@ -61,7 +61,7 @@ class Sparkline extends HTMLElement {
 		// const rectangles: Array<SVGRectElement> = [];
 		for (let i = 0; i < this.data.length; ++i) {
 			const rect = this.createRect(i, this.data[i])
-			const parts: Array<string> = [];
+			const parts: Array<string> = ["element"];
 			if (i === 0)
 				parts.push("first");
 			if (i === (this.data.length - 1))
